@@ -9,11 +9,12 @@
 }
 
 img {
-  position: center;
-  width: 250px;
-  height: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
-h2, h4 {
+#links, h2, h4 {
   text-align: center;
 }
