@@ -7,3 +7,14 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+#links, h2, h4 {
+  text-align: center;
+}
