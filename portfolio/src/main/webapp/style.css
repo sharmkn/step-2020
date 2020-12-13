@@ -7,6 +7,10 @@ html {
   background: #b9ceed;
 }
 
+button {
+  position: center;
+}
+
 #info {
   margin: auto;
   padding: 25px;
@@ -20,11 +24,6 @@ html {
 }
 
 #nav {
-  /*background: #6578a8;
-  width: 200px;
-  height: 100%;
-  float: left;
-  text-align: center;*/
   height: 100%;
   width: 200px;
   position: fixed;
@@ -32,8 +31,8 @@ html {
   top: 0;
   left: 0;
   background-color: #6578a8;
-	overflow-x: hidden;
-	vertical-align: center;
+  overflow-x: hidden;
+  vertical-align: center;
   text-align: center;
 }
 #nav a {
