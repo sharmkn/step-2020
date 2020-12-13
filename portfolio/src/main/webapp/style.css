@@ -1,20 +1,80 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+h1 {
+  text-align: center;
+  color: #515e7d;
+  font-family: "Hind Madurai", sans-serif;
 }
 
-#greeting-container {
-  margin-top: 20px;
+html {
+  background: #b9ceed;
+  font-family: "Hind Madurai", sans-serif;
+}
+
+button {
+  position: center;
+  font-family: "Hind Madurai", sans-serif;
+}
+
+#info {
+  font-family: "Hind Madurai", sans-serif;
+  margin: auto;
+  padding: 25px;
+  padding-top: 25px;
+  width: 650px;
+  border-style:solid;
+  border-width: 5px;
+  border-radius: 25px;
+  border-color: #6578a8;
+  background: #abb9de;
+  animation: fadeIn 2s;
+}
+
+#nav {
+  font-family: "Hind Madurai", sans-serif;
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #6578a8;
+  overflow-x: hidden;
+  vertical-align: center;
+  text-align: center;
+}
+#nav a {
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 25px;
+  border-color: #d8c7ff;
+}
+
+#nav a:hover {
+  background: #d8c7ff;
+}
+
+#navlink {
+    padding: 20px;
 }
 
 img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 40%;
 }
 
 #links, h2, h4 {
+  font-family: "Hind Madurai", sans-serif;
+  color: #515e7d;
   text-align: center;
+}
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }
