@@ -1,17 +1,21 @@
 h1 {
   text-align: center;
   color: #515e7d;
+  font-family: "Hind Madurai", sans-serif;
 }
 
 html {
   background: #b9ceed;
+  font-family: "Hind Madurai", sans-serif;
 }
 
 button {
   position: center;
+  font-family: "Hind Madurai", sans-serif;
 }
 
 #info {
+  font-family: "Hind Madurai", sans-serif;
   margin: auto;
   padding: 25px;
   padding-top: 25px;
@@ -24,6 +28,7 @@ button {
 }
 
 #nav {
+  font-family: "Hind Madurai", sans-serif;
   height: 100%;
   width: 200px;
   position: fixed;
@@ -47,10 +52,6 @@ button {
     padding: 20px;
 }
 
-#greeting-container {
-  margin-top: 20px;
-}
-
 img {
   display: block;
   margin-left: auto;
@@ -59,6 +60,7 @@ img {
 }
 
 #links, h2, h4 {
+  font-family: "Hind Madurai", sans-serif;
   color: #515e7d;
   text-align: center;
 }
