@@ -27,6 +27,12 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+function hoverColour() {
+  const dark = (document.querySelectorAll("html")[0].style.backgroundColor !== 'rgb(237, 185, 209)' ? true : false);
+  const colour = dark ? "#deabca" : "#abb9de";
+  return colour;
+}
+
 function changeMode() {
   const dark = (document.querySelectorAll("html")[0].style.backgroundColor !== 'rgb(237, 185, 209)' ? true : false);
   if (dark) {
@@ -45,7 +51,6 @@ function changeMode() {
       document.querySelectorAll("#info").forEach(element => element.style.borderColor = "#a8658e");
     }
     if (document.querySelectorAll("#nav").length != 0) {
-      document.querySelectorAll("a").forEach(element => element.style.borderColor = "#deabca");
       document.querySelectorAll("#nav").forEach(element => element.style.backgroundColor = "#a8658e");
     }
   } else {
@@ -64,9 +69,7 @@ function changeMode() {
       document.querySelectorAll("#info").forEach(element => element.style.borderColor = "#6578a8");
     }
     if (document.querySelectorAll("#nav").length != 0) {
-      document.querySelectorAll("a").forEach(element => element.style.borderColor = "#abb9de");
       document.querySelectorAll("#nav").forEach(element => element.style.backgroundColor = "#6578a8");
     }
-  }
-  
+  } 
 }

@@ -25,6 +25,7 @@ button {
   border-radius: 25px;
   border-color: #6578a8;
   background: #abb9de;
+  animation: fadeIn 2s;
 }
 
 #nav {
@@ -45,7 +46,11 @@ button {
   border-style: solid;
   border-width: 1px;
   border-radius: 25px;
-  border-color: #abb9de;
+  border-color: #d8c7ff;
+}
+
+#nav a:hover {
+  background: #d8c7ff;
 }
 
 #navlink {
@@ -63,4 +68,13 @@ img {
   font-family: "Hind Madurai", sans-serif;
   color: #515e7d;
   text-align: center;
+}
+
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
 }
