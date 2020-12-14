@@ -24,11 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/page-views")
 public class PageViewServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3908980907790412313L;
-    private int pageViews = 0;
+  private int pageViews = 0;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
