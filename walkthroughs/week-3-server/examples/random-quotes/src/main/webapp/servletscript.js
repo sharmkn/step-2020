@@ -72,9 +72,10 @@ async function getRandomQuoteUsingAsyncAwait() {
   document.getElementById('quote-container').innerText = quote;
 }
 
-async function hello() {
-  const response = await fetch('/data');
-  const greeting = await response.text();
-  document.getElementById('greeting-container').innerText = greeting;
-}
+function hello() {
+  // The fetch() function returns a Promise because the request is asynchronous.
+  const responsePromise = fetch('/data');
 
+  // When the request is complete, pass the response into handleResponse().
+  responsePromise.then(handleResponse("Hello Sharmin!"));
+}
