@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,29 +34,26 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> comments = new ArrayList<String>();
-  private ArrayList<String> commenter = new ArrayList<String>();
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    for (int count = 0; count < comments.size(); count++) {
-        String comment = "\"" + comments.get(count) + "\"" + " -" + commenter.get(count);
-        response.getWriter().println(comment);
-        count++;
+    Query query = new Query("Comment").addSort("comment", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      String comment = "\"" + entity.getProperty("comment") + "\"" + " -" + entity.getProperty("username");
+      response.getWriter().println(comment);
     }
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     if ((request.getParameter("comment") != null) && (request.getParameter("username") != null)) {
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("comment", request.getParameter("comment"));
-        commentEntity.setProperty("user", request.getParameter("username"));
+        commentEntity.setProperty("username", request.getParameter("username"));
         datastore.put(commentEntity);
-        comments.add(request.getParameter("comment"));
-        commenter.add(request.getParameter("username"));
     }
     response.sendRedirect("/form.html");
   }
