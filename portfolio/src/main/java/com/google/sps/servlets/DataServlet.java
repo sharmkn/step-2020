@@ -15,18 +15,37 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+import com.google.gson.Gson;
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private ArrayList<String> comments = new ArrayList<String>();
+  private ArrayList<String> commenter = new ArrayList<String>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Sharmin!</h1>");
+    response.setContentType("application/json");
+    for (int count = 0; count < comments.size(); count++) {
+        String comment = "\"" + comments.get(count) + "\"" + " -" + commenter.get(count);
+        response.getWriter().println(comment);
+        count++;
+    }
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    if (request.getParameter("comment") != null && request.getParameter("username") != null) {
+        comments.add(request.getParameter("comment"));
+        commenter.add(request.getParameter("username"));
+    }
+    response.sendRedirect("/form.html");
   }
 }
