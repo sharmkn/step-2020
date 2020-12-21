@@ -33,17 +33,16 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    int count = 0;
-    while (count < comments.size()) {
+    for (int count = 0; count < comments.size(); count++) {
         String comment = "\"" + comments.get(count) + "\"" + " -" + commenter.get(count);
         response.getWriter().println(comment);
         count++;
-    }    
+    }
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    if ((request.getParameter("comment") != null) && (request.getParameter("username") != null)) {
+    if (request.getParameter("comment") != null && request.getParameter("username") != null) {
         comments.add(request.getParameter("comment"));
         commenter.add(request.getParameter("username"));
     }
