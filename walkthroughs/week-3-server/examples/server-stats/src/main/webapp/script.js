@@ -45,9 +45,7 @@ async function getList() {
   const list = await response.json();
   const arrayList = document.getElementById('arraylist-container');
   arrayList.innerText = '';
-  arrayList.appendChild(createListElement(list[0]));
-  arrayList.appendChild(createListElement(list[1]));
-  arrayList.appendChild(createListElement(list[2]));
-  arrayList.appendChild(createListElement(list[3]));
-  arrayList.appendChild(createListElement(list[4]));
+  for (var count = 0; count < list.size(); count++) {
+      arrayList.appendChild(createListElement(list[count]));
+  }
 }
