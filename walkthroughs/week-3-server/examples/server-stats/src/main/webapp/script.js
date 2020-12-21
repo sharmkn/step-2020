@@ -39,3 +39,13 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+async function getList() {
+  const response = await fetch('/data');
+  const list = await response.json();
+  const arrayList = document.getElementById('arraylist-container');
+  arrayList.innerText = '';
+  for (var count = 0; count < list.size(); count++) {
+      arrayList.appendChild(createListElement(list[count]));
+  }
+}
