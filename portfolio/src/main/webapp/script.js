@@ -73,3 +73,9 @@ function changeMode() {
     }
   } 
 }
+
+async function getForm() {
+  const response = await fetch('/data');
+  const comment = await response.text();
+  document.getElementById('comments').innerText = comment;
+}
