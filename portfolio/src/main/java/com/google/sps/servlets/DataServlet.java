@@ -14,8 +14,17 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,24 +36,44 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> comments = new ArrayList<String>();
-  private ArrayList<String> commenter = new ArrayList<String>();
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  int commentSize = 5;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    for (int count = 0; count < comments.size(); count++) {
-        String comment = "\"" + comments.get(count) + "\"" + " -" + commenter.get(count);
-        response.getWriter().println(comment);
-        count++;
+    Query query = new Query("Comment").addSort("comment", SortDirection.ASCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      String text = (String) entity.getProperty("comment");
+      String username = (String) entity.getProperty("username");
+      String comment = username + " said:" + "\n" + "\"" + text + "\"";
+      comments.add(comment);
+    }
+
+    Gson gson = new Gson();
+
+    int displaySize = commentSize < comments.size() ? commentSize : comments.size();
+
+    List<String> displayedComments = comments.subList(0, displaySize);
+
+    response.setContentType("text/html;");
+    for (int i = 0; i < displaySize; i++) {
+      response.getWriter().println(comments.get(i));
     }
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    if (request.getParameter("comment") != null && request.getParameter("username") != null) {
-        comments.add(request.getParameter("comment"));
-        commenter.add(request.getParameter("username"));
+    String requestedSize = request.getParameter("commentSize");
+    commentSize = requestedSize == " " ? 5 : Integer.parseInt(requestedSize);
+    if (!request.getParameter("comment").isEmpty() && !request.getParameter("username").isEmpty()) {
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("comment", request.getParameter("comment"));
+        commentEntity.setProperty("username", request.getParameter("username"));
+        datastore.put(commentEntity);
     }
     response.sendRedirect("/form.html");
   }
