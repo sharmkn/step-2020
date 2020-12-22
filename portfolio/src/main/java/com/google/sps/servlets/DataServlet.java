@@ -20,9 +20,11 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,21 +37,39 @@ import com.google.gson.Gson;
 public class DataServlet extends HttpServlet {
 
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  int commentSize = 5;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    Query query = new Query("Comment").addSort("comment", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort("comment", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      String comment = "\"" + entity.getProperty("comment") + "\"" + " -" + entity.getProperty("username");
-      response.getWriter().println(comment);
+      String text = (String) entity.getProperty("comment");
+      String username = (String) entity.getProperty("username");
+      String comment = username + " said:" + "\n" + "\"" + text + "\"";
+      comments.add(comment);
+    }
+
+    Gson gson = new Gson();
+
+    int displaySize = commentSize < comments.size() ? commentSize : comments.size();
+
+    List<String> displayedComments = comments.subList(0, displaySize);
+
+    response.setContentType("text/html;");
+    for (int i = 0; i < displaySize; i++) {
+      response.getWriter().println(comments.get(i));
     }
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    if ((request.getParameter("comment") != null) && (request.getParameter("username") != null)) {
+    String requestedSize = request.getParameter("commentSize");
+    commentSize = requestedSize == " " ? 5 : Integer.parseInt(requestedSize);
+    if (!request.getParameter("comment").isEmpty() && !request.getParameter("username").isEmpty()) {
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("comment", request.getParameter("comment"));
         commentEntity.setProperty("username", request.getParameter("username"));
