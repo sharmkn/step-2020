@@ -79,3 +79,9 @@ async function getForm() {
   const comment = await response.text();
   document.getElementById('comments').innerText = comment;
 }
+
+async function deleteForm() {
+  const response = await fetch('/delete-data');
+  const comment = await response.text();
+  document.getElementById('comments').innerText = comment;
+}

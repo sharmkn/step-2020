@@ -41,7 +41,6 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
     Query query = new Query("Comment").addSort("comment", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
@@ -68,7 +67,11 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String requestedSize = request.getParameter("commentSize");
-    commentSize = requestedSize == " " ? 5 : Integer.parseInt(requestedSize);
+    if (requestedSize == " ") {
+        commentSize = 5;
+    } else {
+        commentSize = Integer.parseInt(requestedSize);
+    }
     if (!request.getParameter("comment").isEmpty() && !request.getParameter("username").isEmpty()) {
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("comment", request.getParameter("comment"));
