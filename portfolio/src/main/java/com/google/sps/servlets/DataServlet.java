@@ -20,7 +20,10 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +40,7 @@ import com.google.gson.Gson;
 public class DataServlet extends HttpServlet {
 
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  UserService userService = UserServiceFactory.getUserService();
   int commentSize = 5;
 
   @Override
@@ -48,7 +52,9 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : results.asIterable()) {
       String text = (String) entity.getProperty("comment");
       String username = (String) entity.getProperty("username");
-      String comment = username + " said:" + "\n" + "\"" + text + "\"\n";
+      String email = (String) entity.getProperty("email");
+      String comment = username + " (" + email + ") said:" 
+        + "\n" + "\"" + text + "\"\n";
       comments.add(comment);
     }
 
@@ -67,15 +73,15 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String requestedSize = request.getParameter("commentSize");
-    if (requestedSize == " ") {
-        commentSize = 5;
-    } else {
-        commentSize = Integer.parseInt(requestedSize);
+    String email = "Anonymous";
+    if (userService.isUserLoggedIn()) {
+      email = userService.getCurrentUser().getEmail();
     }
     if (!request.getParameter("comment").isEmpty() && !request.getParameter("username").isEmpty()) {
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("comment", request.getParameter("comment"));
         commentEntity.setProperty("username", request.getParameter("username"));
+        commentEntity.setProperty("email", email);
         datastore.put(commentEntity);
     }
     response.sendRedirect("/form.html");
