@@ -75,7 +75,14 @@ function changeMode() {
 }
 
 async function getForm() {
-  const response = await fetch('/data');
-  const comment = await response.text();
-  document.getElementById('comments').innerText = comment;
+  var response = await fetch('/login');
+  var login = await response.text();
+  if (login.includes("not logged in.")) {
+    document.getElementById('comments').innerHTML = login;
+  } else {
+    response = await fetch('/data');
+    const comment = await response.text();
+    login = login + comment;
+    document.getElementById('comments').innerHTML = login;
+  }
 }
