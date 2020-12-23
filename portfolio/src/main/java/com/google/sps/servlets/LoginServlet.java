@@ -32,11 +32,11 @@ public class LoginServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       String userEmail = userService.getCurrentUser().getEmail();
-      String logoutUrl = userService.createLogoutURL("/login");
+      String logoutUrl = userService.createLogoutURL("/form.html");
       response.getWriter().println("<p>Hello " + userEmail + "! You are logged in</p>");
       response.getWriter().println("<p>You can leave <a href=\"" + logoutUrl + "\">if you want</a>.</p>");
     } else {
-      String loginUrl = userService.createLoginURL("/login");
+      String loginUrl = userService.createLoginURL("/form.html");
       response.getWriter().println("<p>You are not logged in. <a href=\"" + loginUrl + "\">Let's fix that.</a></p>");
     }
   }

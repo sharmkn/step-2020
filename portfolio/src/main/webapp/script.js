@@ -76,13 +76,17 @@ function changeMode() {
 
 async function getForm() {
   var response = await fetch('/login');
-  var login = await response.text();
-  if (login.includes("not logged in.")) {
-    document.getElementById('comments').innerHTML = login;
-  } else {
+  const login = await response.text();
+  document.getElementById('loginStatus').innerHTML = login;
+  if (!login.includes("not logged in.")) {
     response = await fetch('/data');
     const comment = await response.text();
-    login = login + comment;
-    document.getElementById('comments').innerHTML = login;
+    document.getElementById('comments').innerHTML = comment;
   }
+}
+
+async function deleteForm() {
+  const response = await fetch('/delete-data');
+  const comment = await response.text();
+  document.getElementById('comments').innerText = comment;
 }
