@@ -79,8 +79,6 @@ function getMap() {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
-  document.getElementById('map').style[0] = "";
-  console.log(document.getElementById('map').style.position);
 }
 
 async function getForm() {
