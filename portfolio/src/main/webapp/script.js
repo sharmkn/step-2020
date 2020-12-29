@@ -81,7 +81,11 @@ async function getForm() {
   if (!login.includes("not logged in.")) {
     response = await fetch('/data');
     const comment = await response.text();
-    document.getElementById('comments').innerText = comment;
+    document.getElementById('comments').innerHTML = comment;
+
+    response = await fetch('/image-handler');
+    const imageUrl = await response.text();
+    document.getElementById('my-form').action = imageUrl;
   }
 }
 

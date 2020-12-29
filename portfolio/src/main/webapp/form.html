@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <title>Leave a Comment!</title>
+    <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body onload="getForm()">
-    <form action="/data" method="POST">
+    <form action="/data" method="POST" id="my-form" enctype="multipart/form-data">
       <label for="username">Username</label>
       <input type="text" name="username">
       <label for="comment">Comment</label>
       <input type="text" name="comment">
+      <label for="image">Image</label>
+      <input type="file" name="image">
       <input type="submit" /> <br/>
       <label for="commentSize">Number of Comments Displayed</label>
       <input type="number" id="commentSize" name="commentSize" value="5" min="5" max="20" onchange="getForm()">
