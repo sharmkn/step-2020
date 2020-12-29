@@ -79,10 +79,22 @@ function getMap() {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
+  const contentString = "<h3>UNSW Sydney</h3>" +
+                        "<p> I basically live here. " +
+                        "I have spent the past 3 years " +
+                        "of my life here, and I intend to not show " +
+                        "any signs of slowing down.</p>";
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    maxWidth: 200,
+  });
   const UNSW = new google.maps.Marker({
     position: {lat: -33.9173, lng: 151.2313},
     map: map,
     title: 'UNSW'
+  });
+  UNSW.addListener("click", () => {
+    infowindow.open(map, UNSW);
   });
 }
 
