@@ -69,8 +69,6 @@ public class DataServlet extends HttpServlet {
       String image = (String) entity.getProperty("image");
       String comment = username + " (" + email + ") said:" 
         + "\n" + "\"" + text + "\"\n" + "<br/> <img src=\"" + image + "\" /> <br/>";
-      
-      
       comments.add(comment);
     }
 
