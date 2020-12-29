@@ -74,6 +74,15 @@ function changeMode() {
   } 
 }
 
+function getMap() {
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 8
+  });
+  document.getElementById('map').style[0] = "";
+  console.log(document.getElementById('map').style.position);
+}
+
 async function getForm() {
   var response = await fetch('/login');
   const login = await response.text();
