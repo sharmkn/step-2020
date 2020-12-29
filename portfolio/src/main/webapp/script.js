@@ -79,8 +79,11 @@ function getMap() {
     center: {lat: -34.397, lng: 150.644},
     zoom: 8
   });
-  document.getElementById('map').style[0] = "";
-  console.log(document.getElementById('map').style.position);
+  const UNSW = new google.maps.Marker({
+    position: {lat: -33.9173, lng: 151.2313},
+    map: map,
+    title: 'UNSW'
+  });
 }
 
 async function getForm() {
